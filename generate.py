@@ -48,6 +48,7 @@ class GuestCard(object):
             self.draw.text((text_x_position, text_y_position),
                            text, (0, 0, 0), font=font)
         else:
+            # print(text)
             name, surname = text.split(' ')
             name_y_position = (img_size.y - bottom_buffor -
                                (2*text_size.y) - line_padding)/2
@@ -72,7 +73,7 @@ class GuestCard(object):
 
 
 class CardsGenerator(object):
-    pad = 10
+    pad = 3
 
     def __init__(self, guests, card_size, font, page_format='A3', dpi=300):
         """
@@ -133,13 +134,12 @@ class CardsGenerator(object):
             return True, x2*y2
 
 
-# img_size = (1890, 1181)
 img_size = Size(945, 600)
 font = ImageFont.truetype('LiberationSans-Bold.ttf', 100)
 
-with open('guests.txt') as f:
+with open('guests.txt', mode='r', encoding='utf-8') as f:
     guests = f.readlines()
 
-gen = CardsGenerator(guests, (8, 5), font)
+gen = CardsGenerator(guests, Size(8, 5), font, 'A4')
 gen.generate_cards()
 gen.create_print_files()
